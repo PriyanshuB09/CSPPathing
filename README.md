@@ -1,2 +1,6 @@
-# CSPPathing
-An in-progress autonomous solution by FRC Team 4188. Utilizes A* and trajectory evaluation to try to create a smooth, GUI-style path.
+# 4188's Take on Autonomous Pathfinding
+
+Since January, I worked on researching and prototyping different ways to run an autonomous. We had an grid-based A* algorithm last year, which we ran at our Week 4, DCMP, and offseason events. I've iterated through using AutoBuilder with PathPlanner pathFindToPose and its AD* algorithm. We ran into a couple of issues while chaining paths together, as our robot paused for a second to compute the next path. Then I tried BLine, which was a distance-parameterized path-following library, which did work, especially with little tuning; however, after listening to an Open Alliance team talk about how important a time-parameterized solution is, especially while having a modular auto, to make time for climbing. Time-parameterized just means it creates a trajectory and samples it for a point in time, makes sure the robot is at that point at the same time.
+
+Currently, CSPPathing can generate a list of waypoints. Currently, to allow for all waypoints to be generated at the start of the auto, even for different paths, I made it save the last pose. There are a lot of features I want to add and bugs I want to fix, so this topic might turn out to be a build thread. Currently, there is some logic that exists outside of CSPPathing in our robot code, therefore I'll explain those bits and pieces on this post. CSPPathing uses a node-based A* algorithm to drastically reduce how many nodes it has to consider. Then it applies trajectory evaluations to check if a spline it generates collides with any obstacles (through PathPlanner's Waypoint class).
+
